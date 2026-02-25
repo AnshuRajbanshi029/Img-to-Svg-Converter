@@ -128,10 +128,14 @@
         const previewContainer = document.getElementById('previewContainer');
 
         let currentSvg = '';
+        let currentFileName = 'converted_image';
 
         imageInput.addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (!file) return;
+
+            // Get original file name without extension
+            currentFileName = file.name.replace(/\.[^/.]+$/, "") || 'converted_image';
 
             const reader = new FileReader();
             reader.onload = function (event) {
@@ -175,7 +179,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'coin_base64.svg';
+            a.download = currentFileName + '.svg';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
